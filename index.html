@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <title>Mangalam Supplier Ledger</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --graphite:#23282A; --graphite-2:#2C3234;
@@ -14,13 +14,23 @@
     --moss:#5C7A5A; --rust:#A8432F; --line:#C9BEA3;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--graphite);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:720px;margin:0 auto;padding:48px 20px 80px;}
+  body{margin:0;background:var(--graphite);color:var(--paper);font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Language switcher */
+  .langbar{display:flex;justify-content:flex-end;gap:6px;margin-bottom:24px;}
+  .langbtn{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;
+    padding:7px 14px;border:1px solid #3A413F;border-radius:999px;background:transparent;
+    color:#9AA29E;cursor:pointer;transition:.15s;
+  }
+  .langbtn.on{background:var(--brass);border-color:var(--brass);color:#231a0d;font-weight:600;}
+  .langbtn:hover:not(.on){border-color:var(--brass);color:var(--brass);}
 
   .hero{position:relative;padding-bottom:32px;margin-bottom:8px;border-bottom:1px solid #3A413F;}
   .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
-  h1{font-family:'Zilla Slab',serif;font-weight:700;font-size:38px;line-height:1.08;margin:0 0 14px;color:var(--paper);}
-  .sub{font-size:15px;line-height:1.6;color:#B9C0BC;max-width:56ch;margin:0;}
+  h1{font-family:'Zilla Slab','Noto Sans Devanagari',serif;font-weight:700;font-size:36px;line-height:1.15;margin:0 0 14px;color:var(--paper);}
+  .sub{font-size:15px;line-height:1.65;color:#B9C0BC;max-width:58ch;margin:0;}
 
   .stamp{position:absolute;top:6px;right:0;width:88px;height:88px;border-radius:50%;border:2px dashed var(--brass);
     display:flex;align-items:center;justify-content:center;transform:rotate(-8deg);
@@ -29,7 +39,7 @@
 
   .card{background:var(--paper);color:var(--ink);border-radius:2px;padding:34px 30px;margin-top:28px;box-shadow:0 20px 40px -20px rgba(0,0,0,.5);}
 
-  #loginScreen .lead{font-family:'Zilla Slab',serif;font-weight:600;font-size:19px;margin:0 0 18px;}
+  #loginScreen .lead{font-family:'Zilla Slab','Noto Sans Devanagari',serif;font-weight:600;font-size:19px;margin:0 0 18px;}
   #loginScreen input{
     width:100%;font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.04em;
     padding:16px 14px;border:1px solid #C2B79C;background:#F8F5EE;border-radius:3px;color:var(--ink);
@@ -38,22 +48,22 @@
   #loginScreen .err{font-size:13px;color:var(--rust);margin-top:10px;display:none;}
   .go-row{margin-top:22px;text-align:right;}
   button.go{
-    font-family:'Zilla Slab',serif;font-weight:600;font-size:16px;background:var(--ink);color:var(--paper);
+    font-family:'Zilla Slab','Noto Sans Devanagari',serif;font-weight:600;font-size:16px;background:var(--ink);color:var(--paper);
     border:none;padding:14px 30px;border-radius:2px;cursor:pointer;letter-spacing:.02em;
   }
   button.go:disabled{opacity:.5;cursor:default;}
   button.go:hover:not(:disabled){background:#1a2320;}
 
   .id-strip{display:flex;justify-content:space-between;align-items:center;background:#F2EBDA;border:1px solid var(--line);border-radius:3px;padding:12px 16px;margin-bottom:6px;}
-  .id-strip .who{font-family:'Zilla Slab',serif;font-weight:600;font-size:15px;}
+  .id-strip .who{font-family:'Zilla Slab','Noto Sans Devanagari',serif;font-weight:600;font-size:15px;}
   .id-strip .role{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--brass-dark);}
   .id-strip .switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8171;cursor:pointer;text-decoration:underline;}
 
   .entry{padding:20px 0;border-bottom:1px solid var(--line);}
   .entry:last-child{border-bottom:none;}
   .entry-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-dark);letter-spacing:.06em;margin-bottom:8px;display:block;}
-  .entry label.q{display:block;font-family:'Zilla Slab',serif;font-weight:600;font-size:16.5px;color:var(--ink);margin-bottom:12px;line-height:1.35;}
-  textarea{resize:vertical;min-height:70px;width:100%;font-family:'IBM Plex Sans',sans-serif;font-size:14.5px;padding:11px 12px;border:1px solid #C2B79C;background:#F8F5EE;border-radius:3px;color:var(--ink);}
+  .entry label.q{display:block;font-family:'Zilla Slab','Noto Sans Devanagari',serif;font-weight:600;font-size:16px;color:var(--ink);margin-bottom:12px;line-height:1.4;}
+  textarea{resize:vertical;min-height:70px;width:100%;font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;font-size:14.5px;padding:11px 12px;border:1px solid #C2B79C;background:#F8F5EE;border-radius:3px;color:var(--ink);}
 
   .checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
   .chip{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 12px;border:1px solid #C2B79C;border-radius:999px;cursor:pointer;user-select:none;background:#F8F5EE;color:var(--ink);transition:.15s;}
@@ -62,17 +72,18 @@
   .scale{display:flex;gap:6px;margin-top:6px;}
   .scale button{flex:1;padding:12px 0;border:1px solid #C2B79C;background:#F8F5EE;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);cursor:pointer;transition:.15s;}
   .scale button.on{background:var(--brass);border-color:var(--brass-dark);color:#231a0d;font-weight:600;}
-  .scale-labels{display:flex;justify-content:space-between;font-size:11px;color:#8A8171;margin-top:6px;font-family:'IBM Plex Mono',monospace;}
+  .scale-labels{display:flex;justify-content:space-between;font-size:11px;color:#8A8171;margin-top:6px;font-family:'IBM Plex Mono','Noto Sans Devanagari',monospace;}
 
-  .section-label{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--moss);margin:36px 0 4px;}
+  .section-label{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--moss);margin:36px 0 4px;}
+  .section-label .sub-note{color:#8A8171;text-transform:none;letter-spacing:0;font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;}
   .submit-row{margin-top:32px;text-align:right;}
-  button.submit{font-family:'Zilla Slab',serif;font-weight:600;font-size:16px;background:var(--ink);color:var(--paper);border:none;padding:14px 30px;border-radius:2px;cursor:pointer;letter-spacing:.02em;}
+  button.submit{font-family:'Zilla Slab','Noto Sans Devanagari',serif;font-weight:600;font-size:16px;background:var(--ink);color:var(--paper);border:none;padding:14px 30px;border-radius:2px;cursor:pointer;letter-spacing:.02em;}
   button.submit:disabled{opacity:.5;cursor:default;}
   button.submit:hover:not(:disabled){background:#1a2320;}
 
   .done{display:none;text-align:center;padding:50px 20px;}
   .done .stampbig{width:140px;height:140px;margin:0 auto 24px;border-radius:50%;border:3px dashed var(--moss);display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);color:var(--moss);font-family:'Zilla Slab',serif;font-weight:700;font-size:20px;text-align:center;line-height:1.3;}
-  .done h2{font-family:'Zilla Slab',serif;color:var(--paper);}
+  .done h2{font-family:'Zilla Slab','Noto Sans Devanagari',serif;color:var(--paper);}
   .done p{color:#B9C0BC;}
 
   #surveyCard{display:none;}
@@ -81,81 +92,230 @@
 <body>
 <div class="wrap">
 
+  <div class="langbar">
+    <button class="langbtn on" data-lang="en">English</button>
+    <button class="langbtn" data-lang="hi">हिंदी</button>
+    <button class="langbtn" data-lang="mr">मराठी</button>
+  </div>
+
   <div class="hero">
     <div class="stamp">SUPPLIER<br>LEDGER<br>· MLL ·</div>
-    <div class="eyebrow">Mangalam Landmarks · Purchase &amp; CBD</div>
-    <h1>Supplier Ledger — Feedback Entry</h1>
-    <p class="sub">A short, honest account of how it feels to work with us. Enter your registered mobile number to begin.</p>
+    <div class="eyebrow" data-i18n="eyebrow"></div>
+    <h1 data-i18n="title"></h1>
+    <p class="sub" data-i18n="subtitle"></p>
   </div>
 
   <div class="card" id="loginScreen">
-    <p class="lead">Enter your mobile number</p>
-    <input type="tel" id="phoneInput" placeholder="10-digit mobile number" maxlength="13" inputmode="numeric">
-    <p class="hint">Use the number registered with Mangalam Purchase/CBD.</p>
-    <p class="err" id="loginErr">We couldn't find that number on file. Please check and try again, or contact your Mangalam point of contact.</p>
-    <div class="go-row"><button class="go" id="loginBtn">Continue</button></div>
+    <p class="lead" data-i18n="loginLead"></p>
+    <input type="tel" id="phoneInput" maxlength="13" inputmode="numeric">
+    <p class="hint" data-i18n="loginHint"></p>
+    <p class="err" id="loginErr" data-i18n="loginErr"></p>
+    <div class="go-row"><button class="go" id="loginBtn" data-i18n="continueBtn"></button></div>
   </div>
 
   <div class="card" id="surveyCard">
     <div class="id-strip">
       <div><div class="who" id="idName"></div><div class="role" id="idOwner"></div></div>
-      <div class="switch" id="switchNum">Not you? Switch number</div>
+      <div class="switch" id="switchNum" data-i18n="switchNum"></div>
     </div>
 
     <form id="surveyForm">
-      <div class="section-label">Projects</div>
+      <div class="section-label" data-i18n="sectionProjects"></div>
       <div class="entry">
         <span class="entry-num">01</span>
-        <label class="q">Project(s) you currently supply to</label>
+        <label class="q" data-i18n="q1"></label>
         <div class="checks" id="projectChips"></div>
       </div>
 
-      <div class="section-label">Relationship &amp; Chemistry <span style="color:#8A8171;text-transform:none;letter-spacing:0;">— rate 1 (poor) to 5 (excellent)</span></div>
+      <div class="section-label"><span data-i18n="sectionChemistry"></span> <span class="sub-note" data-i18n="sectionChemistrySub"></span></div>
 
-      <div class="entry"><span class="entry-num">02</span><label class="q">Clarity of communication from our Purchase/CBD team</label>
-        <div class="scale" data-q="q5"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">03</span><label class="q">Speed of response to your queries or escalations</label>
-        <div class="scale" data-q="q6"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">04</span><label class="q">Fairness in rate negotiation and finalization</label>
-        <div class="scale" data-q="q7"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">05</span><label class="q">Consistency in honoring agreed payment terms</label>
-        <div class="scale" data-q="q8"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">06</span><label class="q">Respect and professionalism in day-to-day interactions</label>
-        <div class="scale" data-q="q9"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">07</span><label class="q">Transparency in vendor selection / decision-making</label>
-        <div class="scale" data-q="q10"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
+      <div class="entry"><span class="entry-num">02</span><label class="q" data-i18n="q2"></label>
+        <div class="scale" data-q="q5"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">03</span><label class="q" data-i18n="q3"></label>
+        <div class="scale" data-q="q6"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">04</span><label class="q" data-i18n="q4"></label>
+        <div class="scale" data-q="q7"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">05</span><label class="q" data-i18n="q5"></label>
+        <div class="scale" data-q="q8"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">06</span><label class="q" data-i18n="q6"></label>
+        <div class="scale" data-q="q9"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">07</span><label class="q" data-i18n="q7"></label>
+        <div class="scale" data-q="q10"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
 
-      <div class="section-label">Capability &amp; Long-Term Fit</div>
-      <div class="entry"><span class="entry-num">08</span><label class="q">Visibility given on upcoming order pipeline / forecast</label>
-        <div class="scale" data-q="q11"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">09</span><label class="q">Ease of resolving quality or delivery disputes</label>
-        <div class="scale" data-q="q12"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
-      <div class="entry"><span class="entry-num">10</span><label class="q">Willingness of Mangalam to accommodate urgent requirements</label>
-        <div class="scale" data-q="q13"></div><div class="scale-labels"><span>Poor</span><span>Excellent</span></div></div>
+      <div class="section-label" data-i18n="sectionCapability"></div>
+      <div class="entry"><span class="entry-num">08</span><label class="q" data-i18n="q8"></label>
+        <div class="scale" data-q="q11"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">09</span><label class="q" data-i18n="q9"></label>
+        <div class="scale" data-q="q12"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
+      <div class="entry"><span class="entry-num">10</span><label class="q" data-i18n="q10"></label>
+        <div class="scale" data-q="q13"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
 
-      <div class="section-label">Open Feedback</div>
-      <div class="entry"><span class="entry-num">11</span><label class="q">What is the ONE thing Mangalam could do to make working with us easier?</label><textarea id="q14"></textarea></div>
-      <div class="entry"><span class="entry-num">12</span><label class="q">Would you increase capacity/investment to serve Mangalam given more forward visibility on orders? Why or why not?</label><textarea id="q15"></textarea></div>
-      <div class="entry"><span class="entry-num">13</span><label class="q">Any other feedback for our Purchase/CBD leadership?</label><textarea id="q16"></textarea></div>
+      <div class="section-label" data-i18n="sectionFeedback"></div>
+      <div class="entry"><span class="entry-num">11</span><label class="q" data-i18n="q11"></label><textarea id="q14"></textarea></div>
+      <div class="entry"><span class="entry-num">12</span><label class="q" data-i18n="q12"></label><textarea id="q15"></textarea></div>
+      <div class="entry"><span class="entry-num">13</span><label class="q" data-i18n="q13"></label><textarea id="q16"></textarea></div>
 
-      <div class="submit-row"><button type="submit" class="submit" id="submitBtn">Submit entry</button></div>
+      <div class="submit-row"><button type="submit" class="submit" id="submitBtn" data-i18n="submitBtn"></button></div>
     </form>
   </div>
 
   <div class="done" id="doneScreen">
-    <div class="stampbig">ENTRY<br>RECORDED</div>
-    <h2>Thank you.</h2>
-    <p>Your feedback has been logged with Mangalam Purchase &amp; CBD.</p>
+    <div class="stampbig" data-i18n="stampRecorded"></div>
+    <h2 data-i18n="doneTitle"></h2>
+    <p data-i18n="doneMsg"></p>
   </div>
 
 </div>
 
 <script>
-  // ---- CONFIG ----
-  const API_BASE = '/api/sheet'; // Vercel proxy route
+  // ============================================================
+  // TRANSLATIONS
+  // ============================================================
+  const I18N = {
+    en: {
+      eyebrow: 'Mangalam Landmarks · Purchase & CBD',
+      title: 'Supplier Ledger — Feedback Entry',
+      subtitle: 'A short, honest account of how it feels to work with us. Enter your registered mobile number to begin.',
+      loginLead: 'Enter your mobile number',
+      phonePlaceholder: '10-digit mobile number',
+      loginHint: 'Use the number registered with Mangalam Purchase/CBD.',
+      loginErr: "We couldn't find that number on file. Please check and try again, or contact your Mangalam point of contact.",
+      continueBtn: 'Continue',
+      checkingBtn: 'Checking…',
+      switchNum: 'Not you? Switch number',
+      ownerLabel: 'Owner: ',
+      sectionProjects: 'Projects',
+      q1: 'Project(s) you currently supply to',
+      sectionChemistry: 'Relationship & Chemistry',
+      sectionChemistrySub: '— rate 1 (poor) to 5 (excellent)',
+      q2: 'Clarity of communication from our Purchase/CBD team',
+      q3: 'Speed of response to your queries or escalations',
+      q4: 'Fairness in rate negotiation and finalization',
+      q5: 'Consistency in honoring agreed payment terms',
+      q6: 'Respect and professionalism in day-to-day interactions',
+      q7: 'Transparency in vendor selection / decision-making',
+      sectionCapability: 'Capability & Long-Term Fit',
+      q8: 'Visibility given on upcoming order pipeline / forecast',
+      q9: 'Ease of resolving quality or delivery disputes',
+      q10: 'Willingness of Mangalam to accommodate urgent requirements',
+      sectionFeedback: 'Open Feedback',
+      q11: 'What is the ONE thing Mangalam could do to make working with us easier?',
+      q12: 'Would you increase capacity/investment to serve Mangalam given more forward visibility on orders? Why or why not?',
+      q13: 'Any other feedback for our Purchase/CBD leadership?',
+      scalePoor: 'Poor',
+      scaleExcellent: 'Excellent',
+      submitBtn: 'Submit entry',
+      recordingBtn: 'Recording…',
+      stampRecorded: 'ENTRY<br>RECORDED',
+      doneTitle: 'Thank you.',
+      doneMsg: 'Your feedback has been logged with Mangalam Purchase & CBD.'
+    },
+    hi: {
+      eyebrow: 'मंगलम लैंडमार्क्स · परचेज़ एवं सीबीडी',
+      title: 'सप्लायर लेजर — फीडबैक एंट्री',
+      subtitle: 'हमारे साथ काम करने का अनुभव कैसा रहा, इसका एक संक्षिप्त और ईमानदार विवरण दें। शुरू करने के लिए अपना पंजीकृत मोबाइल नंबर दर्ज करें।',
+      loginLead: 'अपना मोबाइल नंबर दर्ज करें',
+      phonePlaceholder: '10 अंकों का मोबाइल नंबर',
+      loginHint: 'मंगलम परचेज़/सीबीडी के पास पंजीकृत नंबर का उपयोग करें।',
+      loginErr: 'यह नंबर हमारे रिकॉर्ड में नहीं मिला। कृपया दोबारा जांचें या अपने मंगलम संपर्क से बात करें।',
+      continueBtn: 'जारी रखें',
+      checkingBtn: 'जांच हो रही है…',
+      switchNum: 'यह आप नहीं हैं? नंबर बदलें',
+      ownerLabel: 'मालिक: ',
+      sectionProjects: 'प्रोजेक्ट्स',
+      q1: 'आप वर्तमान में किन प्रोजेक्ट्स को सप्लाई कर रहे हैं',
+      sectionChemistry: 'संबंध एवं तालमेल',
+      sectionChemistrySub: '— 1 (खराब) से 5 (उत्कृष्ट) के बीच रेटिंग दें',
+      q2: 'हमारी परचेज़/सीबीडी टीम से संवाद की स्पष्टता',
+      q3: 'आपके सवालों या समस्याओं के समाधान की गति',
+      q4: 'दर निर्धारण और अंतिम रूप देने में निष्पक्षता',
+      q5: 'सहमत भुगतान शर्तों का लगातार पालन',
+      q6: 'रोज़मर्रा के व्यवहार में सम्मान और व्यावसायिकता',
+      q7: 'सप्लायर चयन / निर्णय प्रक्रिया में पारदर्शिता',
+      sectionCapability: 'क्षमता एवं दीर्घकालिक उपयुक्तता',
+      q8: 'आगामी ऑर्डर की योजना / पूर्वानुमान की जानकारी',
+      q9: 'गुणवत्ता या डिलीवरी विवादों को सुलझाने में आसानी',
+      q10: 'तत्काल आवश्यकताओं को पूरा करने में मंगलम की तत्परता',
+      sectionFeedback: 'खुला फीडबैक',
+      q11: 'मंगलम के साथ काम करना आसान बनाने के लिए एक सबसे ज़रूरी बदलाव क्या है?',
+      q12: 'यदि ऑर्डर की अधिक पूर्व जानकारी मिले, तो क्या आप मंगलम के लिए अपनी क्षमता/निवेश बढ़ाएंगे? क्यों या क्यों नहीं?',
+      q13: 'हमारी परचेज़/सीबीडी लीडरशिप के लिए कोई अन्य फीडबैक?',
+      scalePoor: 'खराब',
+      scaleExcellent: 'उत्कृष्ट',
+      submitBtn: 'एंट्री सबमिट करें',
+      recordingBtn: 'दर्ज हो रहा है…',
+      stampRecorded: 'एंट्री<br>दर्ज हुई',
+      doneTitle: 'धन्यवाद।',
+      doneMsg: 'आपका फीडबैक मंगलम परचेज़ एवं सीबीडी के पास दर्ज कर लिया गया है।'
+    },
+    mr: {
+      eyebrow: 'मंगलम लँडमार्क्स · परचेस व सीबीडी',
+      title: 'सप्लायर लेजर — फीडबॅक नोंद',
+      subtitle: 'आमच्यासोबत काम करण्याचा अनुभव कसा आहे, याचे थोडक्यात व प्रामाणिक वर्णन द्या. सुरू करण्यासाठी तुमचा नोंदणीकृत मोबाइल नंबर टाका.',
+      loginLead: 'तुमचा मोबाइल नंबर टाका',
+      phonePlaceholder: '10 अंकी मोबाइल नंबर',
+      loginHint: 'मंगलम परचेस/सीबीडीकडे नोंदणीकृत नंबर वापरा.',
+      loginErr: 'हा नंबर आमच्या रेकॉर्डमध्ये सापडला नाही. कृपया पुन्हा तपासा किंवा तुमच्या मंगलम संपर्काशी बोला.',
+      continueBtn: 'पुढे जा',
+      checkingBtn: 'तपासत आहे…',
+      switchNum: 'हे तुम्ही नाही का? नंबर बदला',
+      ownerLabel: 'मालक: ',
+      sectionProjects: 'प्रोजेक्ट्स',
+      q1: 'तुम्ही सध्या कोणत्या प्रोजेक्ट्सना पुरवठा करत आहात',
+      sectionChemistry: 'संबंध व सुसंवाद',
+      sectionChemistrySub: '— 1 (कमी) ते 5 (उत्कृष्ट) असे गुण द्या',
+      q2: 'आमच्या परचेस/सीबीडी टीमकडून संवादाची स्पष्टता',
+      q3: 'तुमच्या प्रश्नांना किंवा तक्रारींना उत्तर देण्याचा वेग',
+      q4: 'दर ठरवताना व अंतिम करताना निष्पक्षता',
+      q5: 'ठरलेल्या पेमेंट अटींचे सातत्याने पालन',
+      q6: 'रोजच्या व्यवहारात आदर व व्यावसायिकता',
+      q7: 'सप्लायर निवड / निर्णय प्रक्रियेतील पारदर्शकता',
+      sectionCapability: 'क्षमता व दीर्घकालीन उपयुक्तता',
+      q8: 'आगामी ऑर्डर्सबाबत आधी दिलेली माहिती / अंदाज',
+      q9: 'गुणवत्ता किंवा डिलिव्हरीतील वाद सोडवण्याची सुलभता',
+      q10: 'तातडीच्या गरजा पूर्ण करण्यासाठी मंगलमची तयारी',
+      sectionFeedback: 'खुले फीडबॅक',
+      q11: 'मंगलमसोबत काम करणे सोपे करण्यासाठी सर्वात महत्त्वाची एक गोष्ट कोणती?',
+      q12: 'ऑर्डर्सबाबत आधी माहिती मिळाल्यास तुम्ही मंगलमसाठी क्षमता/गुंतवणूक वाढवाल का? का किंवा का नाही?',
+      q13: 'आमच्या परचेस/सीबीडी नेतृत्वासाठी आणखी काही फीडबॅक?',
+      scalePoor: 'कमी',
+      scaleExcellent: 'उत्कृष्ट',
+      submitBtn: 'नोंद सबमिट करा',
+      recordingBtn: 'नोंद होत आहे…',
+      stampRecorded: 'नोंद<br>झाली',
+      doneTitle: 'धन्यवाद.',
+      doneMsg: 'तुमचा फीडबॅक मंगलम परचेस व सीबीडीकडे नोंदवला गेला आहे.'
+    }
+  };
 
-  // Edit this list if your active projects change — no longer pulled
-  // dynamically from Apps Script since this page is static on Vercel.
+  let currentLang = 'en';
+
+  function applyLang(lang){
+    currentLang = lang;
+    const t = I18N[lang];
+    document.getElementById('htmlRoot').setAttribute('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.getElementById('phoneInput').placeholder = t.phonePlaceholder;
+    document.querySelectorAll('.langbtn').forEach(b=>{
+      b.classList.toggle('on', b.dataset.lang === lang);
+    });
+    // Re-apply owner label if a supplier is already identified
+    if (supplier) {
+      document.getElementById('idOwner').textContent = supplier.owner ? (t.ownerLabel + supplier.owner) : '';
+    }
+  }
+
+  document.querySelectorAll('.langbtn').forEach(btn=>{
+    btn.addEventListener('click', ()=>applyLang(btn.dataset.lang));
+  });
+
+  // ============================================================
+  // CONFIG
+  // ============================================================
+  const API_BASE = '/api/sheet';
   const PROJECTS = ['Midas III','Myra','Mithila-2','Momento','Starview',
     'Aikyam','Miraya','Marvel','Shyni Gold','Niyoshi Park'];
 
@@ -177,25 +337,26 @@
     const val = document.getElementById('phoneInput').value.trim();
     if(!val) return;
     const btn = this;
-    btn.disabled = true; btn.textContent = 'Checking…';
+    const t = I18N[currentLang];
+    btn.disabled = true; btn.textContent = t.checkingBtn;
     document.getElementById('loginErr').style.display = 'none';
 
     try {
       const res = await fetch(`${API_BASE}?action=lookup&phone=${encodeURIComponent(val)}`);
       const data = await res.json();
-      btn.disabled = false; btn.textContent = 'Continue';
+      btn.disabled = false; btn.textContent = t.continueBtn;
 
       if(data.found){
         supplier = data;
         document.getElementById('idName').textContent = data.name;
-        document.getElementById('idOwner').textContent = data.owner ? ('Owner: ' + data.owner) : '';
+        document.getElementById('idOwner').textContent = data.owner ? (t.ownerLabel + data.owner) : '';
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('surveyCard').style.display = 'block';
       } else {
         document.getElementById('loginErr').style.display = 'block';
       }
     } catch(err) {
-      btn.disabled = false; btn.textContent = 'Continue';
+      btn.disabled = false; btn.textContent = t.continueBtn;
       alert('Something went wrong checking that number. Please try again.\n'+err);
     }
   });
@@ -227,7 +388,8 @@
     e.preventDefault();
     if(!supplier){ alert('Please verify your mobile number first.'); return; }
     const btn = document.getElementById('submitBtn');
-    btn.disabled = true; btn.textContent = 'Recording…';
+    const t = I18N[currentLang];
+    btn.disabled = true; btn.textContent = t.recordingBtn;
 
     const payload = {
       action: 'submit',
@@ -258,9 +420,11 @@
       }
     } catch(err) {
       alert('Something went wrong recording your entry. Please try again.\n'+err);
-      btn.disabled=false; btn.textContent='Submit entry';
+      btn.disabled=false; btn.textContent=t.submitBtn;
     }
   });
+
+  applyLang('en');
 </script>
 </body>
 </html>
