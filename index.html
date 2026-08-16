@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#23282A; --graphite-2:#2C3234;
+    --paper:#ECE6D9; --paper-dim:#DED5C0;
+    --ink:#263029; --brass:#B8873A; --brass-dark:#8C6526;
+    --moss:#5C7A5A; --amber:#C68E3D; --rust:#A8432F; --line:#3A413F;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--graphite);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 24px 80px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+  h1{font-family:'Zilla Slab',serif;font-weight:700;font-size:34px;margin:0 0 6px;}
+  .sub{color:#9AA29E;font-size:14px;margin:0 0 30px;}
+
+  .summary-row{display:flex;gap:14px;margin-bottom:30px;flex-wrap:wrap;}
+  .sumcard{background:var(--graphite-2);border:1px solid var(--line);border-radius:4px;padding:16px 20px;flex:1;min-width:130px;}
+  .sumcard .n{font-family:'Zilla Slab',serif;font-size:28px;font-weight:700;color:var(--brass);}
+  .sumcard .l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8A9490;margin-top:4px;}
+
+  table{width:100%;border-collapse:collapse;background:var(--paper);color:var(--ink);border-radius:4px;overflow:hidden;font-size:13.5px;}
+  th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:12px 14px;background:var(--paper-dim);color:#5C5240;cursor:pointer;user-select:none;border-bottom:2px solid #C2B79C;}
+  th:hover{color:var(--ink);}
+  td{padding:12px 14px;border-bottom:1px solid #DED5C0;vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:#F5F0E4;}
+  .name{font-family:'Zilla Slab',serif;font-weight:600;font-size:15px;}
+  .phone{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5C5240;}
+  .score{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;}
+  .score.no-data{color:#B0A98F;font-weight:400;font-style:italic;font-size:12.5px;}
+
+  .stamp{display:inline-flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;padding:5px 11px;border-radius:999px;border:1.5px dashed;transform:rotate(-2deg);text-transform:uppercase;font-weight:600;}
+  .stamp.good{color:var(--moss);border-color:var(--moss);}
+  .stamp.mid{color:var(--brass-dark);border-color:var(--brass-dark);}
+  .stamp.low{color:var(--rust);border-color:var(--rust);}
+  .stamp.none{color:#B0A98F;border-color:#C2B79C;}
+
+  .empty{padding:60px 20px;text-align:center;color:#8A9490;font-family:'IBM Plex Mono',monospace;font-size:13px;}
+  .refresh{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass);cursor:pointer;background:none;border:1px solid var(--brass);padding:8px 16px;border-radius:3px;margin-bottom:20px;}
+  .refresh:hover{background:var(--brass);color:#231a0d;}
+
+  .share-box{background:var(--graphite-2);border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin-bottom:20px;}
+  .share-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8A9490;margin-bottom:10px;}
+  .share-row{display:flex;gap:10px;}
+  .share-row input{flex:1;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px 12px;border:1px solid var(--line);background:var(--graphite);color:var(--paper);border-radius:3px;}
+  .copy{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--graphite);background:var(--brass);border:none;padding:0 18px;border-radius:3px;cursor:pointer;font-weight:600;}
+  .copy:hover{background:var(--brass-dark);}
+  .copy.copied{background:var(--moss);}
+  .loading{color:#8A9490;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:20px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Mangalam Landmarks · Purchase &amp; CBD · Internal</div>
+  <h1>Supplier Ledger — Dashboard</h1>
+  <p class="sub">Chemistry score from supplier feedback entries. Call the owner directly for any supplier flagged low.</p>
+
+  <div class="share-box">
+    <div class="share-label">Survey link — send this to suppliers</div>
+    <div class="share-row">
+      <input type="text" id="surveyLinkInput" readonly>
+      <button class="copy" id="copyBtn">Copy</button>
+    </div>
+  </div>
+
+  <button class="refresh" onclick="loadData()">↻ Recompute &amp; refresh</button>
+
+  <div id="summaryRow" class="summary-row"></div>
+  <div id="tableContainer"><div class="loading">Loading scorecard…</div></div>
+</div>
+
+<script>
+  let rows = [];
+  let sortKey = 'Chemistry Score';
+  let sortDir = -1;
+
+  function scoreClass(score){
+    if(score === '' || score === null || score === undefined) return 'none';
+    if(score >= 4) return 'good';
+    if(score >= 2.5) return 'mid';
+    return 'low';
+  }
+  function scoreLabel(score){
+    if(score === '' || score === null || score === undefined) return 'No responses';
+    if(score >= 4) return 'Strong';
+    if(score >= 2.5) return 'Fair';
+    return 'Low';
+  }
+
+  function render(){
+    const sorted = [...rows].sort((a,b)=>{
+      const av=a[sortKey], bv=b[sortKey];
+      if(typeof av==='number' && typeof bv==='number') return (av-bv)*sortDir;
+      return String(av).localeCompare(String(bv))*sortDir;
+    });
+
+    const withData = rows.filter(r=>r['Chemistry Score']!=='' && r['Chemistry Score']!=null);
+    const strong = withData.filter(r=>r['Chemistry Score']>=4).length;
+    const low = withData.filter(r=>r['Chemistry Score']<2.5).length;
+
+    document.getElementById('summaryRow').innerHTML = `
+      <div class="sumcard"><div class="n">${rows.length}</div><div class="l">Total suppliers</div></div>
+      <div class="sumcard"><div class="n">${withData.length}</div><div class="l">Responses received</div></div>
+      <div class="sumcard"><div class="n">${strong}</div><div class="l">Strong chemistry</div></div>
+      <div class="sumcard"><div class="n">${low}</div><div class="l">Flagged low</div></div>
+    `;
+
+    if(!rows.length){
+      document.getElementById('tableContainer').innerHTML = '<div class="empty">No suppliers yet. Add rows to the Suppliers tab (Name, Phone, Owner) in the Sheet to begin.</div>';
+      return;
+    }
+
+    const cols = [['Supplier Name','Supplier'],['Phone','Phone'],['Owner','Owner'],
+      ['Chemistry Score','Chemistry'],['Response Count','Responses']];
+
+    let html = '<table><thead><tr>';
+    cols.forEach(([key,label])=>{
+      html += `<th onclick="setSortKey('${key}')">${label}${sortKey===key?(sortDir===1?' ▲':' ▼'):''}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+
+    sorted.forEach(r=>{
+      const score = r['Chemistry Score'];
+      const cls = scoreClass(score);
+      html += `<tr>
+        <td class="name">${r['Supplier Name']}</td>
+        <td class="phone">${r['Phone']||''}</td>
+        <td>${r['Owner']||''}</td>
+        <td>
+          ${score!=='' && score!=null ? `<span class="score">${Number(score).toFixed(1)} / 5</span>` : '<span class="score no-data">No data</span>'}
+          &nbsp;<span class="stamp ${cls}">${scoreLabel(score)}</span>
+        </td>
+        <td>${r['Response Count']||0}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById('tableContainer').innerHTML = html;
+  }
+
+  function setSortKey(key){
+    if(sortKey===key) sortDir *= -1; else { sortKey=key; sortDir=-1; }
+    render();
+  }
+
+  function loadData(){
+    document.getElementById('tableContainer').innerHTML = '<div class="loading">Recomputing scores…</div>';
+    google.script.run
+      .withSuccessHandler(data=>{ rows = data; render(); })
+      .withFailureHandler(err=>{ document.getElementById('tableContainer').innerHTML = '<div class="empty">Error loading scorecard: '+err+'</div>'; })
+      .getScorecard();
+  }
+
+  // Survey link = same base URL as this page, minus the ?view=admin&token=... params
+  (function setupShareLink(){
+    const base = window.location.href.split('?')[0];
+    const input = document.getElementById('surveyLinkInput');
+    input.value = base;
+    document.getElementById('copyBtn').addEventListener('click', function(){
+      input.select();
+      document.execCommand('copy');
+      this.textContent = 'Copied';
+      this.classList.add('copied');
+      setTimeout(()=>{ this.textContent='Copy'; this.classList.remove('copied'); }, 1500);
+    });
+  })();
+
+  loadData();
+</script>
+</body>
+</html>
