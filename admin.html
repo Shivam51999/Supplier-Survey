@@ -5,39 +5,39 @@
 <title>Mangalam Supplier Ledger — Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --graphite:#23282A; --graphite-2:#2C3234;
-    --paper:#ECE6D9; --paper-dim:#DED5C0;
-    --ink:#263029; --brass:#B8873A; --brass-dark:#8C6526;
+    --graphite:#2B2B2B; --graphite-2:#3A3A3A;
+    --paper:#FFFFFF; --paper-dim:#F0F0F0;
+    --ink:#333333; --brass:#EA1D24; --brass-dark:#B0151B;
     --moss:#5C7A5A; --amber:#C68E3D; --rust:#A8432F; --line:#3A413F;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--graphite);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:1000px;margin:0 auto;padding:44px 24px 80px;}
   .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
-  h1{font-family:'Zilla Slab',serif;font-weight:700;font-size:34px;margin:0 0 6px;}
+  h1{font-family:'Poppins',serif;font-weight:700;font-size:34px;margin:0 0 6px;}
   .sub{color:#9AA29E;font-size:14px;margin:0 0 30px;}
 
   .gate{max-width:420px;margin:80px auto;background:var(--graphite-2);border:1px solid var(--line);border-radius:4px;padding:30px;}
   .gate label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA29E;display:block;margin-bottom:10px;}
   .gate input{width:100%;font-family:'IBM Plex Mono',monospace;font-size:15px;padding:12px 14px;border:1px solid var(--line);background:var(--graphite);color:var(--paper);border-radius:3px;}
-  .gate button{margin-top:16px;width:100%;font-family:'Zilla Slab',serif;font-weight:600;font-size:15px;background:var(--brass);color:#231a0d;border:none;padding:12px 0;border-radius:3px;cursor:pointer;}
+  .gate button{margin-top:16px;width:100%;font-family:'Poppins',serif;font-weight:600;font-size:15px;background:var(--brass);color:#FFFFFF;border:none;padding:12px 0;border-radius:3px;cursor:pointer;}
   .gate .err{color:var(--rust);font-size:13px;margin-top:10px;display:none;font-family:'IBM Plex Mono',monospace;}
 
   .summary-row{display:flex;gap:14px;margin-bottom:30px;flex-wrap:wrap;}
   .sumcard{background:var(--graphite-2);border:1px solid var(--line);border-radius:4px;padding:16px 20px;flex:1;min-width:130px;}
-  .sumcard .n{font-family:'Zilla Slab',serif;font-size:28px;font-weight:700;color:var(--brass);}
+  .sumcard .n{font-family:'Poppins',serif;font-size:28px;font-weight:700;color:var(--brass);}
   .sumcard .l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8A9490;margin-top:4px;}
 
   table{width:100%;border-collapse:collapse;background:var(--paper);color:var(--ink);border-radius:4px;overflow:hidden;font-size:13.5px;}
-  th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:12px 14px;background:var(--paper-dim);color:#5C5240;cursor:pointer;user-select:none;border-bottom:2px solid #C2B79C;}
+  th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:12px 14px;background:var(--paper-dim);color:#5C5240;cursor:pointer;user-select:none;border-bottom:2px solid #D9D9D9;}
   th:hover{color:var(--ink);}
   td{padding:12px 14px;border-bottom:1px solid #DED5C0;vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
   tr:hover td{background:#F5F0E4;}
-  .name{font-family:'Zilla Slab',serif;font-weight:600;font-size:15px;}
+  .name{font-family:'Poppins',serif;font-weight:600;font-size:15px;}
   .phone{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5C5240;}
   .score{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;}
   .score.no-data{color:#B0A98F;font-weight:400;font-style:italic;font-size:12.5px;}
@@ -46,11 +46,11 @@
   .stamp.good{color:var(--moss);border-color:var(--moss);}
   .stamp.mid{color:var(--brass-dark);border-color:var(--brass-dark);}
   .stamp.low{color:var(--rust);border-color:var(--rust);}
-  .stamp.none{color:#B0A98F;border-color:#C2B79C;}
+  .stamp.none{color:#B0A98F;border-color:#D9D9D9;}
 
   .empty{padding:60px 20px;text-align:center;color:#8A9490;font-family:'IBM Plex Mono',monospace;font-size:13px;}
   .refresh{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass);cursor:pointer;background:none;border:1px solid var(--brass);padding:8px 16px;border-radius:3px;margin-bottom:20px;}
-  .refresh:hover{background:var(--brass);color:#231a0d;}
+  .refresh:hover{background:var(--brass);color:#FFFFFF;}
 
   .share-box{background:var(--graphite-2);border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin-bottom:20px;}
   .share-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8A9490;margin-bottom:10px;}
