@@ -16,6 +16,7 @@
   *{box-sizing:border-box;}
   body{margin:0;background:var(--graphite);color:var(--paper);font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px;}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 
   /* Language switcher */
   .langbar{display:flex;justify-content:flex-end;gap:6px;margin-bottom:24px;}
@@ -27,6 +28,15 @@
   .langbtn.on{background:var(--brass);border-color:var(--brass);color:#FFFFFF;font-weight:600;}
   .langbtn:hover:not(.on){border-color:var(--brass);color:var(--brass);}
 
+  /* Who are you */
+  .rolebar{display:flex;gap:8px;margin-bottom:26px;flex-wrap:wrap;}
+  .rolebtn{
+    flex:1 1 260px;font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:500;font-size:14px;line-height:1.3;
+    padding:13px 16px;border:1px solid #4A4A4A;border-radius:3px;background:transparent;color:#C9CFCB;cursor:pointer;text-align:left;transition:.15s;
+  }
+  .rolebtn.on{background:var(--paper);color:var(--ink);border-color:var(--paper);font-weight:600;box-shadow:inset 4px 0 0 var(--brass);}
+  .rolebtn:hover:not(.on){border-color:var(--brass);color:#fff;}
+
   .hero{position:relative;padding-bottom:32px;margin-bottom:8px;border-bottom:1px solid #3A413F;}
   .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
   h1{font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:700;font-size:36px;line-height:1.15;margin:0 0 14px;color:var(--paper);}
@@ -35,17 +45,18 @@
   .stamp{position:absolute;top:6px;right:0;width:88px;height:88px;border-radius:50%;border:2px dashed var(--brass);
     display:flex;align-items:center;justify-content:center;transform:rotate(-8deg);
     font-family:'IBM Plex Mono',monospace;color:var(--brass);font-size:10px;letter-spacing:.08em;text-align:center;line-height:1.3;opacity:.9;}
-  @media (max-width:640px){ .stamp{display:none;} }
+  @media (max-width:640px){ .stamp{display:none;} h1{font-size:30px;} }
 
   .card{background:var(--paper);color:var(--ink);border-radius:2px;padding:34px 30px;margin-top:28px;box-shadow:0 20px 40px -20px rgba(0,0,0,.5);}
+  @media (max-width:480px){ .card{padding:26px 18px;} }
 
-  #loginScreen .lead{font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:600;font-size:19px;margin:0 0 18px;}
-  #loginScreen input{
+  #loginScreen .lead, #teamLogin .lead{font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:600;font-size:19px;margin:0 0 18px;}
+  #loginScreen input, #teamLogin input{
     width:100%;font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.04em;
     padding:16px 14px;border:1px solid #D9D9D9;background:#F7F7F7;border-radius:3px;color:var(--ink);
   }
-  #loginScreen .hint{font-size:12.5px;color:#8A8171;margin-top:10px;}
-  #loginScreen .err{font-size:13px;color:var(--rust);margin-top:10px;display:none;}
+  .hint{font-size:12.5px;color:#8A8171;margin-top:10px;}
+  .err{font-size:13px;color:var(--rust);margin-top:10px;display:none;}
   .go-row{margin-top:22px;text-align:right;}
   button.go{
     font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:600;font-size:16px;background:var(--ink);color:var(--paper);
@@ -63,11 +74,16 @@
   .entry:last-child{border-bottom:none;}
   .entry-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-dark);letter-spacing:.06em;margin-bottom:8px;display:block;}
   .entry label.q{display:block;font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:600;font-size:16px;color:var(--ink);margin-bottom:12px;line-height:1.4;}
-  textarea{resize:vertical;min-height:70px;width:100%;font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;font-size:14.5px;padding:11px 12px;border:1px solid #D9D9D9;background:#F7F7F7;border-radius:3px;color:var(--ink);}
+  textarea, .field{resize:vertical;width:100%;font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;font-size:14.5px;padding:11px 12px;border:1px solid #D9D9D9;background:#F7F7F7;border-radius:3px;color:var(--ink);}
+  textarea{min-height:70px;}
+  .field{font-size:15px;padding:13px 12px;}
 
   .checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
-  .chip{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 12px;border:1px solid #D9D9D9;border-radius:999px;cursor:pointer;user-select:none;background:#F7F7F7;color:var(--ink);transition:.15s;}
+  .chip{font-family:'IBM Plex Mono','Noto Sans Devanagari',monospace;font-size:12px;padding:7px 12px;border:1px solid #D9D9D9;border-radius:999px;cursor:pointer;user-select:none;background:#F7F7F7;color:var(--ink);transition:.15s;}
   .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .rolebtn small{display:block;font-weight:400;opacity:.75;font-size:12px;margin-top:3px;}
+  .chip.team{font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-size:13.5px;font-weight:500;padding:10px 16px;border-radius:3px;}
+  .chip.team.on{background:var(--brass);border-color:var(--brass-dark);color:#fff;}
 
   .scale{display:flex;gap:6px;margin-top:6px;}
   .scale button{flex:1;padding:12px 0;border:1px solid #D9D9D9;background:#F7F7F7;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);cursor:pointer;transition:.15s;}
@@ -75,6 +91,7 @@
   .scale-labels{display:flex;justify-content:space-between;font-size:11px;color:#8A8171;margin-top:6px;font-family:'IBM Plex Mono','Noto Sans Devanagari',monospace;}
 
   .section-label{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dark);margin:36px 0 4px;}
+  .section-label:first-of-type{margin-top:22px;}
   .section-label .sub-note{color:#8A8171;text-transform:none;letter-spacing:0;font-family:'IBM Plex Sans','Noto Sans Devanagari',sans-serif;}
   .submit-row{margin-top:32px;text-align:right;}
   button.submit{font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:600;font-size:16px;background:var(--ink);color:var(--paper);border:none;padding:14px 30px;border-radius:2px;cursor:pointer;letter-spacing:.02em;}
@@ -85,8 +102,10 @@
   .done .stampbig{width:140px;height:140px;margin:0 auto 24px;border-radius:50%;border:3px dashed var(--brass);display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);color:var(--brass);font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;text-align:center;line-height:1.3;}
   .done h2{font-family:'Poppins','Noto Sans Devanagari',sans-serif;color:var(--paper);}
   .done p{color:#B9C0BC;}
+  .done button.go{margin-top:18px;background:var(--brass);}
+  .done button.go:hover:not(:disabled){background:var(--brass-dark);}
 
-  #surveyCard{display:none;}
+  #surveyCard, #teamCard, #teamLogin{display:none;}
 </style>
 </head>
 <body>
@@ -98,16 +117,22 @@
     <button class="langbtn" data-lang="mr">मराठी</button>
   </div>
 
-  <div class="hero">
-    <div class="stamp">SUPPLIER<br>LEDGER<br>· MLL ·</div>
-    <div class="eyebrow" data-i18n="eyebrow"></div>
-    <h1 data-i18n="title"></h1>
-    <p class="sub" data-i18n="subtitle"></p>
+  <div class="rolebar" role="group" aria-label="Who are you">
+    <button type="button" class="rolebtn on" data-role="supplier" data-i18n="roleSupplier"></button>
+    <button type="button" class="rolebtn" data-role="team" data-i18n="roleTeam"></button>
   </div>
 
+  <div class="hero">
+    <div class="stamp" id="stampTxt">SUPPLIER<br>LEDGER<br>· MLL ·</div>
+    <div class="eyebrow" data-i18n="eyebrow"></div>
+    <h1 id="heroTitle" data-i18n="title"></h1>
+    <p class="sub" id="heroSub" data-i18n="subtitle"></p>
+  </div>
+
+  <!-- ===================== SUPPLIER / CONTRACTOR FLOW (rates Mangalam) ===================== -->
   <div class="card" id="loginScreen">
     <p class="lead" data-i18n="loginLead"></p>
-    <input type="tel" id="phoneInput" maxlength="13" inputmode="numeric">
+    <input type="tel" id="phoneInput" maxlength="13" inputmode="numeric" aria-label="Mobile number">
     <p class="hint" data-i18n="loginHint"></p>
     <p class="err" id="loginErr" data-i18n="loginErr"></p>
     <div class="go-row"><button class="go" id="loginBtn" data-i18n="continueBtn"></button></div>
@@ -151,9 +176,9 @@
         <div class="scale" data-q="q13"></div><div class="scale-labels"><span data-i18n="scalePoor"></span><span data-i18n="scaleExcellent"></span></div></div>
 
       <div class="section-label" data-i18n="sectionFeedback"></div>
-      <div class="entry"><span class="entry-num">11</span><label class="q" data-i18n="q11"></label><textarea id="q14"></textarea></div>
-      <div class="entry"><span class="entry-num">12</span><label class="q" data-i18n="q12"></label><textarea id="q15"></textarea></div>
-      <div class="entry"><span class="entry-num">13</span><label class="q" data-i18n="q13"></label><textarea id="q16"></textarea></div>
+      <div class="entry"><span class="entry-num">11</span><label class="q" for="q14" data-i18n="q11"></label><textarea id="q14"></textarea></div>
+      <div class="entry"><span class="entry-num">12</span><label class="q" for="q15" data-i18n="q12"></label><textarea id="q15"></textarea></div>
+      <div class="entry"><span class="entry-num">13</span><label class="q" for="q16" data-i18n="q13"></label><textarea id="q16"></textarea></div>
 
       <div class="submit-row"><button type="submit" class="submit" id="submitBtn" data-i18n="submitBtn"></button></div>
     </form>
@@ -165,17 +190,99 @@
     <p data-i18n="doneMsg"></p>
   </div>
 
+  <!-- ===================== MANGALAM TEAM FLOW (rates a contractor) ===================== -->
+  <div class="card" id="teamLogin">
+    <p class="lead" data-i18n="teamCodeLead"></p>
+    <input type="password" id="teamCodeInput" autocomplete="off" aria-label="Team code">
+    <p class="hint" data-i18n="teamCodeHint"></p>
+    <p class="err" id="teamCodeErr"></p>
+    <div class="go-row"><button class="go" id="teamLoginBtn" data-i18n="continueBtn"></button></div>
+  </div>
+
+  <div class="card" id="teamCard">
+    <form id="teamForm">
+      <div class="section-label" data-i18n="teamSecWho"></div>
+      <div class="entry">
+        <span class="entry-num">01</span>
+        <label class="q" for="teamName" data-i18n="yourName"></label>
+        <input class="field" type="text" id="teamName" maxlength="60" autocomplete="name">
+      </div>
+      <div class="entry">
+        <span class="entry-num">02</span>
+        <label class="q" data-i18n="yourTeam"></label>
+        <div class="checks" id="teamChips" role="group"></div>
+      </div>
+
+      <div class="section-label" data-i18n="teamSecWhom"></div>
+      <div class="entry">
+        <span class="entry-num">03</span>
+        <label class="q" for="teamContractor" data-i18n="contractorLabel"></label>
+        <input class="field" type="text" id="teamContractor" list="contractorList" maxlength="80" autocomplete="off">
+        <datalist id="contractorList"></datalist>
+        <p class="hint" data-i18n="contractorHint"></p>
+      </div>
+      <div class="entry">
+        <span class="entry-num">04</span>
+        <label class="q" data-i18n="teamProjects"></label>
+        <div class="checks" id="teamProjectChips"></div>
+      </div>
+
+      <div class="section-label"><span id="teamQsTitle"></span> <span class="sub-note" data-i18n="sectionChemistrySub"></span></div>
+      <div id="teamQs"></div>
+
+      <div class="section-label" data-i18n="sectionFeedback"></div>
+      <div class="entry">
+        <span class="entry-num" id="teamCommentNum">10</span>
+        <label class="q" for="teamComment" data-i18n="commentLabel"></label>
+        <textarea id="teamComment" maxlength="350"></textarea>
+        <p class="hint" data-i18n="commentHint"></p>
+      </div>
+
+      <div class="submit-row"><button type="submit" class="submit" id="teamSubmitBtn" data-i18n="teamSubmit"></button></div>
+    </form>
+  </div>
+
+  <div class="done" id="teamDone">
+    <div class="stampbig" data-i18n="stampRecorded"></div>
+    <h2 data-i18n="doneTitle"></h2>
+    <p data-i18n="teamDoneMsg"></p>
+    <button type="button" class="go" id="rateAnother" data-i18n="rateAnother"></button>
+  </div>
+
 </div>
 
 <script>
+  // ============================================================
+  // CONFIG
+  // ============================================================
+  // Supplier / contractor flow (unchanged): talks to your existing /api/sheet.
+  const API_BASE = '/api/sheet';
+  // Mangalam team flow: paste the /exec URL of the Contract Rate Intelligence Apps Script (Code.gs).
+  const RATE_API_URL = '';
+  const PROJECTS = ['Midas III','Myra','Mithila-2','Momento','Starview',
+    'Aikyam','Miraya','Marvel','Shyni Gold','Niyoshi Park'];
+
+  // The four teams. 'id' and 'area' are sent to the database in English whatever language is on screen.
+  const TEAMS = [
+    {id:'Quality team',     key:'q', area:'Quality of work'},
+    {id:'Safety team',      key:'s', area:'Safety compliance'},
+    {id:'Engineering team', key:'e', area:'Speed and progress (engineering team)'},
+    {id:'Contract team',    key:'c', area:'Documentation and billing (contract team)'}
+  ];
+  const APPROACH_AREA = 'Approach and attitude';
+
   // ============================================================
   // TRANSLATIONS
   // ============================================================
   const I18N = {
     en: {
+      roleSupplier: 'I am a supplier or contractor<br><small>Give feedback on working with Mangalam</small>',
+      roleTeam: 'I am from the Mangalam team<br><small>Rate a contractor for your team</small>',
       eyebrow: 'Mangalam Landmarks · Purchase & CBD',
-      title: 'Supplier Ledger — Feedback Entry',
+      title: 'Supplier & Contractor Ledger — Feedback Entry',
       subtitle: 'A short, honest account of how it feels to work with us. Enter your registered mobile number to begin.',
+      titleTeam: 'Contractor Rating — Mangalam Team',
+      subtitleTeam: 'Each team rates contractors on its own area. It takes about two minutes per contractor. Enter the team code to begin.',
       loginLead: 'Enter your mobile number',
       phonePlaceholder: '10-digit mobile number',
       loginHint: 'Use the number registered with Mangalam Purchase/CBD.',
@@ -185,7 +292,7 @@
       switchNum: 'Not you? Switch number',
       ownerLabel: 'Owner: ',
       sectionProjects: 'Projects',
-      q1: 'Project(s) you currently supply to',
+      q1: 'Project(s) you currently supply to or work on',
       sectionChemistry: 'Relationship & Chemistry',
       sectionChemistrySub: '— rate 1 (poor) to 5 (excellent)',
       q2: 'Clarity of communication from our Purchase/CBD team',
@@ -208,12 +315,45 @@
       recordingBtn: 'Recording…',
       stampRecorded: 'ENTRY<br>RECORDED',
       doneTitle: 'Thank you.',
-      doneMsg: 'Your feedback has been logged with Mangalam Purchase & CBD.'
+      doneMsg: 'Your feedback has been logged with Mangalam Purchase & CBD.',
+      // team flow
+      teamCodeLead: 'Enter the team code',
+      teamCodeHint: 'Ask your team lead or the CBD team for the code.',
+      teamCodeErr: 'That code was not accepted. Please check and try again.',
+      teamNotReady: 'Contractor rating is not connected yet. Please contact the CBD team.',
+      teamNetErr: 'Could not reach the server. Please try again.',
+      teamSecWho: 'About you',
+      yourName: 'Your name',
+      yourTeam: 'Your team',
+      teamSecWhom: 'About the contractor',
+      contractorLabel: 'Contractor name',
+      contractorHint: 'Pick from the list, or type the name if it is not there.',
+      teamProjects: 'Project(s) this rating is about',
+      pickTeamFirst: 'Choose your team above to see your questions.',
+      teamQsTitle: 'Questions for the {team}',
+      commentLabel: 'What went well, and what went wrong?',
+      commentHint: 'Optional. Up to 350 characters.',
+      teamMissing: 'Please enter your name, choose your team and the contractor, and answer every rating.',
+      teamSubmit: 'Submit rating',
+      teamDoneMsg: 'Your rating has been added to the contractor scorecard.',
+      rateAnother: 'Rate another contractor',
+      team_q: 'Quality team', team_s: 'Safety team', team_e: 'Engineering team', team_c: 'Contract team',
+      tq: {
+        q: ['Workmanship and finish compared with the specification','Use of approved materials and keeping test records','Speed and quality of rework and snag closure','Following drawings, checklists and inspection requests'],
+        s: ['Use of PPE (helmet, harness, shoes) by workers','Housekeeping and safe storage at the work area','Following permits, scaffolding and edge-protection rules','Reporting incidents and acting on safety instructions'],
+        e: ['Progress against the agreed schedule','Manpower and equipment deployed versus plan','Coordination with our site engineers and following instructions','Planning ahead: material, labour and handover of work fronts'],
+        c: ['Accuracy of bills and measurement sheets','Timely submission of bills and documents','Following contract terms, scope and approved rates','Handling variations and claims fairly and clearly'],
+        a: 'Approach and attitude: cooperation, responsiveness and willingness to fix problems'
+      }
     },
     hi: {
+      roleSupplier: 'मैं सप्लायर या ठेकेदार हूँ<br><small>मंगलम के साथ काम का फीडबैक दें</small>',
+      roleTeam: 'मैं मंगलम टीम से हूँ<br><small>अपनी टीम की ओर से ठेकेदार को रेट करें</small>',
       eyebrow: 'मंगलम लैंडमार्क्स · परचेज़ एवं सीबीडी',
-      title: 'सप्लायर लेजर — फीडबैक एंट्री',
+      title: 'सप्लायर एवं ठेकेदार लेजर — फीडबैक एंट्री',
       subtitle: 'हमारे साथ काम करने का अनुभव कैसा रहा, इसका एक संक्षिप्त और ईमानदार विवरण दें। शुरू करने के लिए अपना पंजीकृत मोबाइल नंबर दर्ज करें।',
+      titleTeam: 'ठेकेदार रेटिंग — मंगलम टीम',
+      subtitleTeam: 'हर टीम अपने क्षेत्र के आधार पर ठेकेदारों को रेट करती है। एक ठेकेदार में लगभग दो मिनट लगते हैं। शुरू करने के लिए टीम कोड दर्ज करें।',
       loginLead: 'अपना मोबाइल नंबर दर्ज करें',
       phonePlaceholder: '10 अंकों का मोबाइल नंबर',
       loginHint: 'मंगलम परचेज़/सीबीडी के पास पंजीकृत नंबर का उपयोग करें।',
@@ -223,7 +363,7 @@
       switchNum: 'यह आप नहीं हैं? नंबर बदलें',
       ownerLabel: 'मालिक: ',
       sectionProjects: 'प्रोजेक्ट्स',
-      q1: 'आप वर्तमान में किन प्रोजेक्ट्स को सप्लाई कर रहे हैं',
+      q1: 'आप वर्तमान में किन प्रोजेक्ट्स पर सप्लाई या काम कर रहे हैं',
       sectionChemistry: 'संबंध एवं तालमेल',
       sectionChemistrySub: '— 1 (खराब) से 5 (उत्कृष्ट) के बीच रेटिंग दें',
       q2: 'हमारी परचेज़/सीबीडी टीम से संवाद की स्पष्टता',
@@ -246,12 +386,44 @@
       recordingBtn: 'दर्ज हो रहा है…',
       stampRecorded: 'एंट्री<br>दर्ज हुई',
       doneTitle: 'धन्यवाद।',
-      doneMsg: 'आपका फीडबैक मंगलम परचेज़ एवं सीबीडी के पास दर्ज कर लिया गया है।'
+      doneMsg: 'आपका फीडबैक मंगलम परचेज़ एवं सीबीडी के पास दर्ज कर लिया गया है।',
+      teamCodeLead: 'टीम कोड दर्ज करें',
+      teamCodeHint: 'कोड के लिए अपने टीम लीड या सीबीडी टीम से पूछें।',
+      teamCodeErr: 'यह कोड स्वीकार नहीं हुआ। कृपया दोबारा जांचें।',
+      teamNotReady: 'ठेकेदार रेटिंग अभी जुड़ी नहीं है। कृपया सीबीडी टीम से संपर्क करें।',
+      teamNetErr: 'सर्वर से संपर्क नहीं हो सका। कृपया दोबारा कोशिश करें।',
+      teamSecWho: 'आपके बारे में',
+      yourName: 'आपका नाम',
+      yourTeam: 'आपकी टीम',
+      teamSecWhom: 'ठेकेदार के बारे में',
+      contractorLabel: 'ठेकेदार का नाम',
+      contractorHint: 'सूची से चुनें, या नाम सूची में न हो तो लिखें।',
+      teamProjects: 'यह रेटिंग किन प्रोजेक्ट्स के बारे में है',
+      pickTeamFirst: 'अपने प्रश्न देखने के लिए ऊपर अपनी टीम चुनें।',
+      teamQsTitle: '{team} के प्रश्न',
+      commentLabel: 'क्या अच्छा रहा और क्या गलत हुआ?',
+      commentHint: 'वैकल्पिक। अधिकतम 350 अक्षर।',
+      teamMissing: 'कृपया अपना नाम दर्ज करें, अपनी टीम और ठेकेदार चुनें, और हर रेटिंग भरें।',
+      teamSubmit: 'रेटिंग सबमिट करें',
+      teamDoneMsg: 'आपकी रेटिंग ठेकेदार स्कोरकार्ड में जोड़ दी गई है।',
+      rateAnother: 'दूसरे ठेकेदार को रेट करें',
+      team_q: 'क्वालिटी टीम', team_s: 'सेफ्टी टीम', team_e: 'इंजीनियरिंग टीम', team_c: 'कॉन्ट्रैक्ट टीम',
+      tq: {
+        q: ['स्पेसिफिकेशन के अनुसार कारीगरी और फिनिश','स्वीकृत सामग्री का उपयोग और टेस्ट रिकॉर्ड रखना','रीवर्क और खामियां (स्नैग) ठीक करने की गति और गुणवत्ता','ड्रॉइंग, चेकलिस्ट और निरीक्षण अनुरोधों का पालन'],
+        s: ['कामगारों द्वारा पीपीई (हेलमेट, हार्नेस, जूते) का उपयोग','कार्यस्थल पर साफ-सफाई और सुरक्षित भंडारण','परमिट, स्कैफोल्डिंग और एज-प्रोटेक्शन नियमों का पालन','घटनाओं की रिपोर्टिंग और सुरक्षा निर्देशों पर अमल'],
+        e: ['तय समय-सारणी के अनुसार प्रगति','योजना के मुकाबले तैनात मैनपावर और उपकरण','हमारे साइट इंजीनियरों के साथ तालमेल और निर्देशों का पालन','पहले से योजना: सामग्री, मज़दूर और कार्य-क्षेत्र का हैंडओवर'],
+        c: ['बिलों और माप-पत्रकों की सटीकता','बिल और दस्तावेज़ समय पर जमा करना','अनुबंध की शर्तों, कार्यक्षेत्र और स्वीकृत दरों का पालन','बदलाव (वेरिएशन) और दावों को निष्पक्ष व स्पष्ट रूप से संभालना'],
+        a: 'रवैया और सहयोग: सहयोग, त्वरित प्रतिक्रिया और समस्याएँ सुलझाने की इच्छा'
+      }
     },
     mr: {
+      roleSupplier: 'मी सप्लायर किंवा कंत्राटदार आहे<br><small>मंगलमसोबत काम करण्याबद्दल फीडबॅक द्या</small>',
+      roleTeam: 'मी मंगलम टीममधून आहे<br><small>तुमच्या टीमतर्फे कंत्राटदाराला रेट करा</small>',
       eyebrow: 'मंगलम लँडमार्क्स · परचेस व सीबीडी',
-      title: 'सप्लायर लेजर — फीडबॅक नोंद',
+      title: 'सप्लायर व कंत्राटदार लेजर — फीडबॅक नोंद',
       subtitle: 'आमच्यासोबत काम करण्याचा अनुभव कसा आहे, याचे थोडक्यात व प्रामाणिक वर्णन द्या. सुरू करण्यासाठी तुमचा नोंदणीकृत मोबाइल नंबर टाका.',
+      titleTeam: 'कंत्राटदार रेटिंग — मंगलम टीम',
+      subtitleTeam: 'प्रत्येक टीम आपल्या क्षेत्रानुसार कंत्राटदारांना रेट करते. एका कंत्राटदाराला साधारण दोन मिनिटे लागतात. सुरू करण्यासाठी टीम कोड टाका.',
       loginLead: 'तुमचा मोबाइल नंबर टाका',
       phonePlaceholder: '10 अंकी मोबाइल नंबर',
       loginHint: 'मंगलम परचेस/सीबीडीकडे नोंदणीकृत नंबर वापरा.',
@@ -261,7 +433,7 @@
       switchNum: 'हे तुम्ही नाही का? नंबर बदला',
       ownerLabel: 'मालक: ',
       sectionProjects: 'प्रोजेक्ट्स',
-      q1: 'तुम्ही सध्या कोणत्या प्रोजेक्ट्सना पुरवठा करत आहात',
+      q1: 'तुम्ही सध्या कोणत्या प्रोजेक्ट्सवर पुरवठा किंवा काम करत आहात',
       sectionChemistry: 'संबंध व सुसंवाद',
       sectionChemistrySub: '— 1 (कमी) ते 5 (उत्कृष्ट) असे गुण द्या',
       q2: 'आमच्या परचेस/सीबीडी टीमकडून संवादाची स्पष्टता',
@@ -284,28 +456,67 @@
       recordingBtn: 'नोंद होत आहे…',
       stampRecorded: 'नोंद<br>झाली',
       doneTitle: 'धन्यवाद.',
-      doneMsg: 'तुमचा फीडबॅक मंगलम परचेस व सीबीडीकडे नोंदवला गेला आहे.'
+      doneMsg: 'तुमचा फीडबॅक मंगलम परचेस व सीबीडीकडे नोंदवला गेला आहे.',
+      teamCodeLead: 'टीम कोड टाका',
+      teamCodeHint: 'कोडसाठी तुमच्या टीम लीडला किंवा सीबीडी टीमला विचारा.',
+      teamCodeErr: 'हा कोड स्वीकारला गेला नाही. कृपया पुन्हा तपासा.',
+      teamNotReady: 'कंत्राटदार रेटिंग अजून जोडलेले नाही. कृपया सीबीडी टीमशी संपर्क करा.',
+      teamNetErr: 'सर्व्हरशी संपर्क होऊ शकला नाही. कृपया पुन्हा प्रयत्न करा.',
+      teamSecWho: 'तुमच्याबद्दल',
+      yourName: 'तुमचे नाव',
+      yourTeam: 'तुमची टीम',
+      teamSecWhom: 'कंत्राटदाराबद्दल',
+      contractorLabel: 'कंत्राटदाराचे नाव',
+      contractorHint: 'यादीतून निवडा, किंवा यादीत नसल्यास नाव लिहा.',
+      teamProjects: 'हे रेटिंग कोणत्या प्रोजेक्ट्सबद्दल आहे',
+      pickTeamFirst: 'तुमचे प्रश्न पाहण्यासाठी वर तुमची टीम निवडा.',
+      teamQsTitle: '{team} साठी प्रश्न',
+      commentLabel: 'काय चांगले झाले आणि काय चुकले?',
+      commentHint: 'ऐच्छिक. जास्तीत जास्त 350 अक्षरे.',
+      teamMissing: 'कृपया तुमचे नाव टाका, तुमची टीम आणि कंत्राटदार निवडा, आणि प्रत्येक रेटिंग भरा.',
+      teamSubmit: 'रेटिंग सबमिट करा',
+      teamDoneMsg: 'तुमचे रेटिंग कंत्राटदार स्कोअरकार्डमध्ये जोडले गेले आहे.',
+      rateAnother: 'दुसऱ्या कंत्राटदाराला रेट करा',
+      team_q: 'क्वालिटी टीम', team_s: 'सेफ्टी टीम', team_e: 'इंजिनिअरिंग टीम', team_c: 'कॉन्ट्रॅक्ट टीम',
+      tq: {
+        q: ['स्पेसिफिकेशननुसार कारागिरी आणि फिनिश','मंजूर साहित्याचा वापर आणि टेस्ट रेकॉर्ड ठेवणे','रीवर्क आणि त्रुटी (स्नॅग) दुरुस्त करण्याचा वेग व दर्जा','ड्रॉइंग, चेकलिस्ट आणि तपासणी विनंत्यांचे पालन'],
+        s: ['कामगारांकडून पीपीई (हेल्मेट, हार्नेस, बूट) चा वापर','कामाच्या जागी स्वच्छता आणि सुरक्षित साठवण','परवाने, स्कॅफोल्डिंग आणि एज-प्रोटेक्शन नियमांचे पालन','घटनांची नोंद आणि सुरक्षा सूचनांवर अंमलबजावणी'],
+        e: ['ठरलेल्या वेळापत्रकानुसार प्रगती','नियोजनाच्या तुलनेत तैनात मनुष्यबळ व उपकरणे','आमच्या साइट इंजिनिअर्सशी समन्वय आणि सूचनांचे पालन','आधीपासून नियोजन: साहित्य, मजूर आणि कामाच्या जागेचे हस्तांतर'],
+        c: ['बिले आणि मोजमाप पत्रकांची अचूकता','बिले आणि कागदपत्रे वेळेवर सादर करणे','करारातील अटी, कार्यक्षेत्र आणि मंजूर दरांचे पालन','बदल (व्हेरिएशन) आणि दाव्यांची निष्पक्ष व स्पष्ट हाताळणी'],
+        a: 'दृष्टिकोन आणि सहकार्य: सहकार्य, प्रतिसाद आणि समस्या सोडवण्याची तयारी'
+      }
     }
   };
 
   let currentLang = 'en';
+  let role = 'supplier';
+  let supplier = null, doneSup = false;
+  const TS = { code: '', names: [], projects: [], team: '' };
+  let doneTeam = false;
+  const teamAnswers = {};
+  const teamProjects = new Set();
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+  // ============================================================
+  // LANGUAGE
+  // ============================================================
   function applyLang(lang){
     currentLang = lang;
     const t = I18N[lang];
-    document.getElementById('htmlRoot').setAttribute('lang', lang);
+    $('htmlRoot').setAttribute('lang', lang);
     document.querySelectorAll('[data-i18n]').forEach(el=>{
       const key = el.getAttribute('data-i18n');
       if (t[key] !== undefined) el.innerHTML = t[key];
     });
-    document.getElementById('phoneInput').placeholder = t.phonePlaceholder;
+    $('phoneInput').placeholder = t.phonePlaceholder;
     document.querySelectorAll('.langbtn').forEach(b=>{
       b.classList.toggle('on', b.dataset.lang === lang);
     });
-    // Re-apply owner label if a supplier is already identified
     if (supplier) {
-      document.getElementById('idOwner').textContent = supplier.owner ? (t.ownerLabel + supplier.owner) : '';
+      $('idOwner').textContent = supplier.owner ? (t.ownerLabel + supplier.owner) : '';
     }
+    renderTeam();
   }
 
   document.querySelectorAll('.langbtn').forEach(btn=>{
@@ -313,13 +524,33 @@
   });
 
   // ============================================================
-  // CONFIG
+  // WHO ARE YOU (role switch + screens)
   // ============================================================
-  const API_BASE = '/api/sheet';
-  const PROJECTS = ['Midas III','Myra','Mithila-2','Momento','Starview',
-    'Aikyam','Miraya','Marvel','Shyni Gold','Niyoshi Park'];
+  function showScreens(){
+    const sup = role === 'supplier';
+    $('loginScreen').style.display = sup && !supplier && !doneSup ? 'block' : 'none';
+    $('surveyCard').style.display  = sup && supplier && !doneSup ? 'block' : 'none';
+    $('doneScreen').style.display  = sup && doneSup ? 'block' : 'none';
+    $('teamLogin').style.display   = !sup && !TS.code && !doneTeam ? 'block' : 'none';
+    $('teamCard').style.display    = !sup && TS.code && !doneTeam ? 'block' : 'none';
+    $('teamDone').style.display    = !sup && doneTeam ? 'block' : 'none';
+  }
 
-  const chipsContainer = document.getElementById('projectChips');
+  function setRole(r){
+    role = r;
+    document.querySelectorAll('.rolebtn').forEach(b=>b.classList.toggle('on', b.dataset.role === r));
+    $('heroTitle').setAttribute('data-i18n', r === 'supplier' ? 'title' : 'titleTeam');
+    $('heroSub').setAttribute('data-i18n', r === 'supplier' ? 'subtitle' : 'subtitleTeam');
+    $('stampTxt').innerHTML = r === 'supplier' ? 'SUPPLIER<br>LEDGER<br>· MLL ·' : 'CONTRACTOR<br>RATING<br>· MLL ·';
+    applyLang(currentLang);
+    showScreens();
+  }
+  document.querySelectorAll('.rolebtn').forEach(b=>b.addEventListener('click', ()=>setRole(b.dataset.role)));
+
+  // ============================================================
+  // SUPPLIER / CONTRACTOR FLOW (rates Mangalam)
+  // ============================================================
+  const chipsContainer = $('projectChips');
   const selectedProjects = new Set();
   PROJECTS.forEach(p=>{
     const chip = document.createElement('div');
@@ -331,15 +562,13 @@
     chipsContainer.appendChild(chip);
   });
 
-  let supplier = null;
-
-  document.getElementById('loginBtn').addEventListener('click', async function(){
-    const val = document.getElementById('phoneInput').value.trim();
+  $('loginBtn').addEventListener('click', async function(){
+    const val = $('phoneInput').value.trim();
     if(!val) return;
     const btn = this;
     const t = I18N[currentLang];
     btn.disabled = true; btn.textContent = t.checkingBtn;
-    document.getElementById('loginErr').style.display = 'none';
+    $('loginErr').style.display = 'none';
 
     try {
       const res = await fetch(`${API_BASE}?action=lookup&phone=${encodeURIComponent(val)}`);
@@ -348,12 +577,11 @@
 
       if(data.found){
         supplier = data;
-        document.getElementById('idName').textContent = data.name;
-        document.getElementById('idOwner').textContent = data.owner ? (t.ownerLabel + data.owner) : '';
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('surveyCard').style.display = 'block';
+        $('idName').textContent = data.name;
+        $('idOwner').textContent = data.owner ? (t.ownerLabel + data.owner) : '';
+        showScreens();
       } else {
-        document.getElementById('loginErr').style.display = 'block';
+        $('loginErr').style.display = 'block';
       }
     } catch(err) {
       btn.disabled = false; btn.textContent = t.continueBtn;
@@ -361,11 +589,10 @@
     }
   });
 
-  document.getElementById('switchNum').addEventListener('click', function(){
+  $('switchNum').addEventListener('click', function(){
     supplier = null;
-    document.getElementById('phoneInput').value = '';
-    document.getElementById('surveyCard').style.display = 'none';
-    document.getElementById('loginScreen').style.display = 'block';
+    $('phoneInput').value = '';
+    showScreens();
   });
 
   const scaleQs = ['q5','q6','q7','q8','q9','q10','q11','q12','q13'];
@@ -384,10 +611,10 @@
     }
   });
 
-  document.getElementById('surveyForm').addEventListener('submit', async function(e){
+  $('surveyForm').addEventListener('submit', async function(e){
     e.preventDefault();
     if(!supplier){ alert('Please verify your mobile number first.'); return; }
-    const btn = document.getElementById('submitBtn');
+    const btn = $('submitBtn');
     const t = I18N[currentLang];
     btn.disabled = true; btn.textContent = t.recordingBtn;
 
@@ -400,9 +627,9 @@
       q5:answers.q5||'', q6:answers.q6||'', q7:answers.q7||'', q8:answers.q8||'',
       q9:answers.q9||'', q10:answers.q10||'', q11:answers.q11||'', q12:answers.q12||'',
       q13:answers.q13||'',
-      q14:document.getElementById('q14').value,
-      q15:document.getElementById('q15').value,
-      q16:document.getElementById('q16').value
+      q14:$('q14').value,
+      q15:$('q15').value,
+      q16:$('q16').value
     };
 
     try {
@@ -413,8 +640,8 @@
       });
       const data = await res.json();
       if(data.ok){
-        document.getElementById('surveyCard').style.display='none';
-        document.getElementById('doneScreen').style.display='block';
+        doneSup = true;
+        showScreens();
       } else {
         throw new Error(data.error || 'unknown error');
       }
@@ -424,7 +651,182 @@
     }
   });
 
+  // ============================================================
+  // MANGALAM TEAM FLOW (rates a contractor)
+  // ============================================================
+  function rateCall(action, p, code){
+    return new Promise((resolve, reject)=>{
+      if(!RATE_API_URL){ reject(new Error('NOT_READY')); return; }
+      const cb = 'mlr' + Date.now() + Math.floor(Math.random()*1e6);
+      const s = document.createElement('script');
+      const q = new URLSearchParams({action, callback: cb, code});
+      if(p) q.set('p', JSON.stringify(p));
+      const done = ()=>{ clearTimeout(timer); delete window[cb]; s.remove(); };
+      const timer = setTimeout(()=>{ done(); reject(new Error('NET')); }, 30000);
+      window[cb] = d => { done(); d && d.ok ? resolve(d) : reject(new Error(d && d.error || 'NET')); };
+      s.onerror = ()=>{ done(); reject(new Error('NET')); };
+      s.src = RATE_API_URL + '?' + q;
+      document.head.appendChild(s);
+    });
+  }
+
+  function teamOf(){ return TEAMS.find(x=>x.id === TS.team); }
+  function qKeys(){ return ['0','1','2','3','a']; }
+
+  function renderTeam(){
+    const t = I18N[currentLang];
+    // team chips
+    const tc = $('teamChips');
+    tc.innerHTML = '';
+    TEAMS.forEach(tm=>{
+      const c = document.createElement('div');
+      c.className = 'chip team' + (TS.team === tm.id ? ' on' : '');
+      c.setAttribute('role','button'); c.setAttribute('tabindex','0');
+      c.textContent = t['team_' + tm.key];
+      const pick = ()=>{
+        if(TS.team !== tm.id){ Object.keys(teamAnswers).forEach(k=>delete teamAnswers[k]); }
+        TS.team = tm.id;
+        try{ localStorage.setItem('mlr_team', tm.id); }catch(e){}
+        renderTeam();
+      };
+      c.onclick = pick;
+      c.onkeydown = e=>{ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); } };
+      tc.appendChild(c);
+    });
+    // project chips
+    const pc = $('teamProjectChips');
+    pc.innerHTML = '';
+    (TS.projects.length ? TS.projects : PROJECTS).forEach(p=>{
+      const c = document.createElement('div');
+      c.className = 'chip' + (teamProjects.has(p) ? ' on' : '');
+      c.textContent = p;
+      c.onclick = ()=>{ teamProjects.has(p) ? teamProjects.delete(p) : teamProjects.add(p); c.classList.toggle('on'); };
+      pc.appendChild(c);
+    });
+    // contractor suggestions
+    $('contractorList').innerHTML = TS.names.map(n=>`<option value="${esc(n)}">`).join('');
+    // questions for the chosen team
+    const tm = teamOf(), box = $('teamQs');
+    if(!tm){
+      $('teamQsTitle').textContent = '';
+      box.innerHTML = `<div class="entry"><p class="hint" style="margin:0">${esc(t.pickTeamFirst)}</p></div>`;
+      return;
+    }
+    $('teamQsTitle').textContent = t.teamQsTitle.replace('{team}', t['team_' + tm.key]);
+    const qs = t.tq[tm.key].concat([t.tq.a]);
+    box.innerHTML = '';
+    qs.forEach((text, i)=>{
+      const key = i < 4 ? String(i) : 'a';
+      const row = document.createElement('div');
+      row.className = 'entry';
+      const num = String(i + 5).padStart(2, '0');
+      row.innerHTML = `<span class="entry-num">${num}</span><label class="q">${esc(text)}</label><div class="scale"></div><div class="scale-labels"><span>${esc(t.scalePoor)}</span><span>${esc(t.scaleExcellent)}</span></div>`;
+      const sc = row.querySelector('.scale');
+      for(let n=1;n<=5;n++){
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = n;
+        if(teamAnswers[key] === n) b.classList.add('on');
+        b.onclick = ()=>{
+          teamAnswers[key] = n;
+          sc.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+          b.classList.add('on');
+        };
+        sc.appendChild(b);
+      }
+      box.appendChild(row);
+    });
+    $('teamCommentNum').textContent = String(qs.length + 5).padStart(2, '0');
+  }
+
+  async function enterTeam(code){
+    const t = I18N[currentLang];
+    const btn = $('teamLoginBtn'), err = $('teamCodeErr');
+    err.style.display = 'none';
+    btn.disabled = true; btn.textContent = t.checkingBtn;
+    try{
+      const d = await rateCall('listContractors', null, code);
+      TS.code = code;
+      TS.names = d.names || [];
+      TS.projects = d.projects || [];
+      try{ sessionStorage.setItem('mlr_code', code); }catch(e){}
+      try{
+        $('teamName').value = localStorage.getItem('mlr_name') || '';
+        const sv = localStorage.getItem('mlr_team');
+        if(TEAMS.some(x=>x.id === sv)) TS.team = sv;
+      }catch(e){}
+      renderTeam();
+      showScreens();
+    }catch(e){
+      const m = String(e.message);
+      err.textContent = m === 'NOT_READY' ? t.teamNotReady : /access code/i.test(m) ? t.teamCodeErr : t.teamNetErr;
+      err.style.display = 'block';
+      try{ sessionStorage.removeItem('mlr_code'); }catch(x){}
+    }
+    btn.disabled = false; btn.textContent = t.continueBtn;
+  }
+
+  $('teamLoginBtn').addEventListener('click', ()=>{
+    const code = $('teamCodeInput').value.trim();
+    if(code) enterTeam(code);
+  });
+  $('teamCodeInput').addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); $('teamLoginBtn').click(); } });
+
+  $('teamForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const t = I18N[currentLang], tm = teamOf();
+    const name = $('teamName').value.trim(), vendor = $('teamContractor').value.trim();
+    if(!name || !vendor || !tm || qKeys().some(k=>!teamAnswers[k])){ alert(t.teamMissing); return; }
+    const area = ['0','1','2','3'].reduce((s,k)=>s + teamAnswers[k], 0) / 4;
+    const scores = {};
+    scores[tm.area] = Math.round(area * 100) / 100;
+    scores[APPROACH_AREA] = teamAnswers.a;
+    const d = new Date(Date.now() + 5.5*3600*1000);   // today in India
+    const payload = {
+      vendor, by: name, dept: tm.id,
+      site: Array.from(teamProjects).join(', '),
+      scores, comment: $('teamComment').value.trim().slice(0, 350),
+      date: d.toISOString().slice(0, 10)
+    };
+    const btn = $('teamSubmitBtn');
+    btn.disabled = true; btn.textContent = t.recordingBtn;
+    try{
+      await rateCall('submitRating', payload, TS.code);
+      try{ localStorage.setItem('mlr_name', name); }catch(x){}
+      doneTeam = true;
+      showScreens();
+    }catch(err){
+      const m = String(err.message);
+      alert(/access code/i.test(m) ? t.teamCodeErr : (m === 'NET' || m === 'NOT_READY') ? t.teamNetErr : m);
+    }
+    btn.disabled = false; btn.textContent = t.teamSubmit;
+  });
+
+  $('rateAnother').addEventListener('click', ()=>{
+    Object.keys(teamAnswers).forEach(k=>delete teamAnswers[k]);
+    teamProjects.clear();
+    $('teamContractor').value = '';
+    $('teamComment').value = '';
+    doneTeam = false;
+    renderTeam();
+    showScreens();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  // Returning team member in the same browser tab: skip the code screen
+  (function resume(){
+    let c = '';
+    try{ c = sessionStorage.getItem('mlr_code') || ''; }catch(e){}
+    TS.resumeCode = c;
+  })();
+
   applyLang('en');
+  showScreens();
+  if (TS.resumeCode) { /* resumed lazily when the person opens the team tab */
+    document.querySelector('.rolebtn[data-role="team"]').addEventListener('click', function once(){
+      this.removeEventListener('click', once);
+      if (!TS.code) enterTeam(TS.resumeCode);
+    });
+  }
 </script>
 </body>
 </html>
